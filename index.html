@@ -34,14 +34,22 @@
 
     var game = new Phaser.Game(config);
     var platforms;
-    var score = 0;
+    var score;
     var scoreText;
-    var gameOver = false;
+    var gameOver;
     var lives;
     let livesDisplay= new Array(lives);
-    var coolDown=120;
-    var justHit =false;
+    var coolDown;
+    var justHit;
 
+    function valuesReset(){
+        coolDown=120;
+        justHit =false;
+        gameOver = false;
+        score = 0;
+        lives =3;
+        coolDown=120;
+    }
 
     function preload () {
         this.load.image('sky', 'assets/sky.png');
@@ -55,7 +63,7 @@
 
     function create () {
         // load resources
-        lives =3;
+        valuesReset();
         backgorund2 = this.add.image(400, 300, 'skyDark'); 
         background1 = this.add.image(400, 300, 'sky'); 
         for (var i=0;i<lives;i++){
@@ -121,6 +129,7 @@
         if (gameOver){
             if (this.rKey.isDown){
                 this.scene.restart();
+                valuesReset();
             }
         }else{
             if (cursors.left.isDown) {
@@ -145,10 +154,6 @@
         }
     }
     
-    function gameRestart(){
-        gameOverText.setText(' ');
-    }
-
     function collectStar (player,star){
         star.disableBody(true, true);
         score+=10;
